@@ -1,0 +1,51 @@
+import random
+order_statuses = {
+    "shipped": "Your order has been shipped and is on its way!",
+    "processing": "Your order is being processed.",
+    "pending": "Your order is pending and will be processed soon.",
+    "delivered": "Your order has been delivered. Enjoy your purchase!",
+}
+
+
+order_numbers = ["ORD1234", "ORD5678", "ORD9012", "ORD3456", "ORD7890"]
+
+
+def get_order_status(order_number):
+    
+    if order_number in order_numbers:
+        return random.choice(list(order_statuses.keys()))
+    else:
+        return None
+
+
+while True:
+    user_input = input("User: ")
+    user_input = user_input.lower()
+
+    if "order" in user_input:
+        words = user_input.split()
+        if "track" in words:
+            order_number_index = words.index("track") + 1
+            if order_number_index < len(words):
+                order_number = words[order_number_index]
+                order_status = get_order_status(order_number)
+                if order_status:
+                    message = order_statuses[order_status]
+                    print("ChatBot:", message)
+                else:
+                    print("ChatBot: Sorry, I couldn't find any information about that order.")
+            else:
+                print("ChatBot: Please provide an order number to track.")
+        elif "sort" in words:
+            sorted_order_numbers = sorted(order_numbers)
+            print("ChatBot: Here are your order numbers sorted in ascending order:")
+            for number in sorted_order_numbers:
+                print(number)
+        else:
+            print("ChatBot: I'm sorry, I didn't understand that. Please specify whether you want to track or sort orders.")
+    elif user_input == "bye":
+        print("ChatBot: Goodbye!")
+        break
+    else:
+        print("ChatBot: I'm sorry, I didn't understand that.")
+
